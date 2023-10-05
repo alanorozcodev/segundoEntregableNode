@@ -6,6 +6,8 @@ import {Server} from "socket.io";
 import { connectDB } from "./config/dbConnection.js";
 import { productsRouter } from "./routes/products.routes.js";
 import { chatService } from "./dao/index.js";
+import { cartsRouter } from "./routes/carts.routes.js";
+import { viewsRouter } from "./routes/views.routes.js";
 
 const port = 8080;
 const app = express();
@@ -30,9 +32,25 @@ app.set('views', path.join(__dirname,"/views"));
 
 //routes
 app.use("/api/products", productsRouter);
+app.use("/api/carts", cartsRouter);
+app.use(viewsRouter);   
 
-//socket server
+//Arreglo de chat vacio
+let chat = [];
+
+//socket server chat
 io.on("connection", async(socket)=>{
-    console.log("cliente conectado");
-    // ---
+    //cuando se conecta mandamos el historial de chat
+    socket.emit("chatHistory", chat);
+    //Recibimos el mensaje de cada usuario
+    socket.on("msgChat", (data)=> {
+        chat.push(data);
+        //Se envia el historial de chat a todos los usuarios
+        io.emit("chatHistory", chat);
+    });
+    //Alerta de conexion de nuevo cliente
+    socket.on("authenticated", (data)=> {
+        socket.broadcast.emit("NewUser", `El usuario ${data} 
+        se acaba de conectar`);
+    })
 });
