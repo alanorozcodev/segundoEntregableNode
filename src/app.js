@@ -5,9 +5,9 @@ import {engine} from "express-handlebars";
 import {Server} from "socket.io";
 import { connectDB } from "./config/dbConnection.js";
 import { productsRouter } from "./routes/products.routes.js";
-import { chatService } from "./dao/index.js";
 import { cartsRouter } from "./routes/carts.routes.js";
 import { viewsRouter } from "./routes/views.routes.js";
+import { chatRouter } from "./routes/chats.routes.js";
 
 const port = 8080;
 const app = express();
@@ -33,6 +33,7 @@ app.set('views', path.join(__dirname,"/views"));
 //routes
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
+app.use("/api/chat", chatRouter);
 app.use(viewsRouter);   
 
 //Arreglo de chat vacio

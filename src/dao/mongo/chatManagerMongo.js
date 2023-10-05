@@ -5,6 +5,7 @@ export class ChatManagerMongo{
         this.model = chatModel;
     }
 
+    //Mostrar los mensajes
     async getMessages(){
         try {
             const result = await this.model.find();
@@ -15,6 +16,7 @@ export class ChatManagerMongo{
         }
     };
 
+    //Agregar los mensajes
     async addMessages(message){
         try {
             const result = await this.model.create(message);
