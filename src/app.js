@@ -1,12 +1,14 @@
 import express from "express";
-import { __dirname } from "./utils.js";
-import path from "path";
-import {engine} from "express-handlebars";
-import {Server} from "socket.io";
-import { connectDB } from "./config/dbConnection.js";
 import MongoStore from "connect-mongo";
 import cookieParser from "cookie-parser";
 import session from "express-session";
+
+import {engine} from "express-handlebars";
+import {Server} from "socket.io";
+import { connectDB } from "./config/dbConnection.js";
+
+import { __dirname } from "./utils.js";
+import path from "path";
 
 import { productsRouter } from "./routes/products.routes.js";
 import { cartsRouter } from "./routes/carts.routes.js";
@@ -31,6 +33,7 @@ app.use('/js', express.static('node_modules/bootstrap/dist/js'));
 app.use(cookieParser("claveSecreta"));
 
 //Servidor express http
+
 const httpServer = app.listen(port,()=>console.log(`Servidor ejecutandose en el puerto ${port}`));
 //Servidor de websocket
 const io = new Server(httpServer);

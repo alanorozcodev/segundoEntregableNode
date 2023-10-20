@@ -32,7 +32,7 @@ router.post("/login", async (req, res) => {
         res.redirect(`/?message=${encodeURIComponent(message)}`);
     } catch (error) {
         console.error(error.message);   
-        res.render("loginView", { error: "No se pudo iniciar Sesión" });
+        res.render("loginView", { error: "No se pudo iniciar sesion" });
     }
 });
 
